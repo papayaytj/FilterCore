@@ -1,0 +1,40 @@
+@LPGSTART
+@LPGVERSION:1
+
+    # filtername,inpin count,outpin count
+    @LPG-FILTER:source_v1,1,1
+        # pinindex,pinname
+        @LPG-INPIN:0,ip1
+            @LPG-INPIN-PARAM:0,packagingtoken,string
+            @LPG-INPIN-PARAM:1,chname,string
+            @LPG-INPIN-PARAM:2,bandwidth,string
+            @LPG-INPIN-PARAM:3,streamindex,string
+            @LPG-INPIN-PARAM:4,filename,string
+            @LPG-INPIN-PARAM:5,squence,string
+        @LPG-OUTPIN:0,op1
+            @LPG-OUTPIN-TO:drm_v1,ip1
+            @LPG-OUTPIN-PARAM:0,squence,string
+            @LPG-OUTPIN-PARAM:1,filename,string
+
+    @LPG-FILTER:drm_v1,1,1
+        @LPG-INPIN:0,ip1
+            @LPG-INPIN-FROM:source_v1,op1
+            @LPG-INPIN-PARAM:0,squence,string
+            @LPG-INPIN-PARAM:1,filename,string
+        @LPG-OUTPIN:0,op1
+            @LPG-OUTPIN-TO:live_v1,ip1
+            @LPG-OUTPIN-PARAM:0,squence,string
+            @LPG-OUTPIN-PARAM:1,filename,string
+            @LPG-OUTPIN-PARAM:2,drm,long
+
+    @LPG-FILTER:live_v1,1,1
+        @LPG-INPIN:0,ip1
+            @LPG-INPIN-FROM:drm_v1,op1
+            @LPG-INPIN-PARAM:0,squence,string
+            @LPG-INPIN-PARAM:1,filename,string
+            @LPG-INPIN-PARAM:2,drm,long
+        @LPG-OUTPIN:0,op1
+            @LPG-OUTPIN-PARAM:0,squence,string
+            @LPG-OUTPIN-PARAM:1,filename,string
+            @LPG-OUTPIN-PARAM:2,drm,long
+@LPGEND
