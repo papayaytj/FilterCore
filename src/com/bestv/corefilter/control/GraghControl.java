@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.bestv.corefilter.GlobalSettings;
 import com.bestv.corefilter.bean.Filter;
 import com.bestv.corefilter.bean.Gragh;
 import com.bestv.corefilter.bean.Parameter;
 import com.bestv.corefilter.util.FileUtil;
 
 public class GraghControl {
-	
-	private static String GRAGH_SUFFIX = ".gragh";
-	private static String GRAGH_PACKAGE = "graghs";
 	
 	private static String logTitle = "GraghControl";
 	
@@ -23,7 +21,7 @@ public class GraghControl {
 		List<String> lines = null;
 		
 		try {
-			lines = FileUtil.getLinesFromFile(GRAGH_PACKAGE + "/" + graghName + GRAGH_SUFFIX);
+			lines = FileUtil.getLinesFromFile(GlobalSettings.GRAGH_PACKAGE + "/" + graghName + GlobalSettings.GRAGH_SUFFIX);
 		} catch (Exception e) {
 			error(logTitle , e.getMessage());
 		}
@@ -127,8 +125,4 @@ public class GraghControl {
 		return g;
 	}
 	
-	
-	public static void main(String[] args) {
-		System.out.println(createGragh("test"));
-	}
 }

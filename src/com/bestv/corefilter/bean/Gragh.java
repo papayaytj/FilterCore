@@ -6,7 +6,7 @@ public class Gragh {
 	
 	private LinkedList<Filter> filters;
 
-	private LinkedList<Filter> getFilters() {
+	public LinkedList<Filter> getFilters() {
 		if(filters == null){
 			filters = new LinkedList<Filter>();
 		}
@@ -25,6 +25,15 @@ public class Gragh {
 		return getFilters().getLast();
 	}
 	
+	public Filter getFilterByName(String filterName){
+		for(Filter f : getFilters()){
+			if(f.getFilterName().equals(filterName)){
+				return f;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		String s = "";
@@ -33,14 +42,13 @@ public class Gragh {
 		for(Filter f : filters){
 			s += f.getFilterName() + "/" + f.getMainVersion() + "/" + f.getSubVersion() ;
 			s += "\n";
-			for(PinIn p : f.getPinInList()){
-				s += tab  + p.getFilterFrom() + "/" + p.getPinFrom() + "/" + p.getPinLevel() + "/" + p.getPinName();
+			PinIn pIn = f.getPinIn();
+				s += tab  + pIn.getFilterFrom() + "/" + pIn.getPinFrom() + "/" + pIn.getPinLevel() + "/" + pIn.getPinName();
 				s += "\n";
-				for(Parameter pa : p.getList()){
+				for(Parameter pa : pIn.getList()){
 					s += tab + tab + pa.getKey() + "/" + pa.getValue() + "/" + pa.getType();
 					s += "\n";
 				}
-			}
 			for(PinOut p : f.getPinOutList()){
 				s += tab  + p.getFilterTo() + "/" + p.getPinTo() + "/" + p.getPinLevel() + "/" + p.getPinName();
 				s += "\n";

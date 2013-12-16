@@ -23,6 +23,16 @@ public class Pin {
 		thisList.add(p);
 	};
 	
+	public boolean setParameter(String key , String value){
+		for(Parameter p : getList()){
+			if(p.getKey().equals(key)){
+				p.setValue(value);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void addParameter(Parameter p){
 		getList().add(p);
 	};
@@ -31,6 +41,22 @@ public class Pin {
 		if(list == null)
 			list = new ArrayList<Parameter>();
 		return list;
+	}
+	
+	public String[] getParameterKeys(){
+		String[] arr = new String[getList().size()];
+		for(int i = 0 ; i< arr.length ; i++){
+			arr[i] = getList().get(i).getKey();
+		}
+		return arr;
+	}
+	
+	public String[] getParameterValues(){
+		String[] arr = new String[getList().size()];
+		for(int i = 0 ; i< arr.length ; i++){
+			arr[i] = getList().get(i).getValue();
+		}
+		return arr;
 	}
 
 	public String getPinName() {

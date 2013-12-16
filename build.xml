@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<project name="passport" default="dist">
+
+	<description>Build File For Passport</description>
+
+	<property file="build.properties" />
+
+	<path id="project.class.path">
+		<dirset dir="${build.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- ======================================= -->
+	<!--             target: clean               -->
+	<!-- ======================================= -->
+	<target name="clean">
+		<echo message="delete build folders" />
+
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- ======================================= -->
+	<!--              target: init               -->
+	<!--          Init Work For Build            -->
+	<!-- ======================================= -->
+	<target name="init">
+		<echo message="make build and dist folders..." />
+
+		<!-- create build classes folder -->
+		<mkdir dir="${build.dir}" />
+
+		<!-- create distribution folder-->
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!-- ======================================= -->
+	<!--             target: compile             -->
+	<!-- ======================================= -->
+	<target name="compile.src" depends="init">
+		<echo message="compile src files..." />
+
+		<javac srcdir="${src.dir}" destdir="${build.dir}" encoding="utf-8" includes="**/*.java" classpathref="project.class.path" debug="on" includeAntRuntime="no" />
+	</target>
+
+	<!-- ======================================= -->
+	<!--             target: dist                 -->
+	<!-- ======================================= -->
+	<target name="dist" depends="compile.src">
+		<echo message="make jar..." />
+
+		<jar destfile="${dist.dir}/${jar.name}">
+			<fileset dir="${build.dir}" excludes="**/servlet-api.jar, **/jsp-api.jar" />
+		</jar>
+
+		<copy todir="${dist.dir}/filters" overwrite="true">
+			<fileset dir="filters" includes="**/*">
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}/graghs" overwrite="true">
+			<fileset dir="graghs" includes="**/*">
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}" overwrite="true">
+			<fileset dir="lib" includes="**/*">
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<zip destfile="core.zip">
+			<fileset dir="${dist.dir}" >
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</zip>
+		<echo message="war file is generated: ${dist.dir}/${war.name}" />
+	</target>
+
+</project>
+

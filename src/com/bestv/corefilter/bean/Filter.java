@@ -1,8 +1,6 @@
 package com.bestv.corefilter.bean;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Filter {
 	
@@ -12,7 +10,7 @@ public class Filter {
 	
 	private int subVersion;
 	
-	private LinkedList<PinIn> pinInList;
+	private PinIn pinIn;
 	
 	private LinkedList<PinOut> pinOutList;
 
@@ -26,7 +24,7 @@ public class Filter {
 	}
 	
 	public void addPinIn(int pinLevel , String pinName){
-		getPinInList().add(new PinIn(null , null, pinLevel, pinName));
+		this.pinIn = new PinIn(null , null, pinLevel, pinName);
 	}
 	
 	public void addPinOut(int pinLevel , String pinName){
@@ -35,15 +33,15 @@ public class Filter {
 	
 	public void setLastPinIn(String filterFrom , String pinFrom , Integer pinLevel , String pinName , Parameter parameter){
 		if(filterFrom != null)
-			getPinInList().getLast().setFilterFrom(filterFrom);
+			getPinIn().setFilterFrom(filterFrom);
 		if(pinFrom != null)
-			getPinInList().getLast().setPinFrom(pinFrom);
+			getPinIn().setPinFrom(pinFrom);
 		if(pinLevel != null)
-			getPinInList().getLast().setPinLevel(pinLevel);
+			getPinIn().setPinLevel(pinLevel);
 		if(pinName != null)
-			getPinInList().getLast().setPinName(pinName);
+			getPinIn().setPinName(pinName);
 		if(parameter!=null)
-			getPinInList().getLast().addParameter(parameter);
+			getPinIn().addParameter(parameter);
 	}
 	
 	public void setLastPinOut(String filterTo , String pinTo , Integer pinLevel , String pinName , Parameter parameter){
@@ -68,16 +66,20 @@ public class Filter {
 //			getPinInList().getLast().addParameter(parameter);
 //	}
 
-	public LinkedList<PinIn> getPinInList() {
-		if(pinInList == null)
-			pinInList = new LinkedList<PinIn>();
-		return pinInList;
-	}
-
 	public LinkedList<PinOut> getPinOutList() {
 		if(pinOutList == null)
 			pinOutList = new LinkedList<PinOut>();
 		return pinOutList;
+	}
+
+	public PinIn getPinIn() {
+		if(this.pinIn == null)
+			this.pinIn = new PinIn();
+		return pinIn;
+	}
+
+	public void setPinIn(PinIn pinIn) {
+		this.pinIn = pinIn;
 	}
 
 	public String getFilterName() {
